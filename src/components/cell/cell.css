@@ -1,0 +1,12 @@
+.mainCell {
+    --cellSize: 40px;
+
+
+    border: 1px solid white;
+    width: var(--cellSize);
+    height: var(--cellSize);
+}
+
+.clicked {
+    background-color: white
+}

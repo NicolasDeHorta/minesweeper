@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputs {
+    padding-bottom: 1rem
+}
+
+.inputs input {
+    border-radius: 0.5rem;
+    width: 6rem;
+    font-size: 2rem;
+    text-align: center;
+
+}
