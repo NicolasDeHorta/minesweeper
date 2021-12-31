@@ -2,3 +2,18 @@
     display:flex;
     flex-direction: row;
 }
+
+.mainCell {
+    --cellSize: 40px;
+
+    border: 1px solid white;
+    width: var(--cellSize);
+    height: var(--cellSize);
+    background-color: #242424;
+    color: #242424
+}
+
+.revealed {
+    background-color: #484a88;
+    color: white
+}

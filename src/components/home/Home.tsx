@@ -4,9 +4,10 @@ import { Board } from '../board/Board';
 import './home.css';
 
 export const Home = () => {
-const [rows, setRows] = useState(5)
-const [cols, setCols] = useState(5)
+const [rows, setRows] = useState(10)
+const [cols, setCols] = useState(10)
 const [qtyMines, setQtyMines] = useState(5)
+
 
     const handleRowsInput = (e:any) => {
         setRows(e.target.value)

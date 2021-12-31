@@ -28,8 +28,8 @@ export const Cell = (props: CellProps) => {
         setHidden(false)
     }
 
-    return (<div className={`mainCell ${!hidden ? "revealed" : ""}`} onClick={handleClick} >
+    return (<div className={`mainCell ${!props.cellInfo.hidden ? "revealed" : ""}`} onClick={handleClick} >
         {props.cellInfo.hasMine ? "M": (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)}
         
     </div>)
-}
+} 

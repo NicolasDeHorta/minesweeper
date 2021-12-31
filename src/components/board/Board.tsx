@@ -1,14 +1,10 @@
 import React, {useEffect, useState} from 'react'
+import { render } from 'react-dom'
 import { Cell, TCell, TCoords } from '../cell/Cell'
 
 import './board.css'
 
 type Coordinate = ([x: number, y: number])
-
-interface BoardState {
-    completed: boolean,
-    board: TCell[][],
-}
 
 interface BoardProps {
     rows: number,
@@ -20,6 +16,7 @@ export const Board = (props: BoardProps) => {
     let boardInitialState:TCell[][] = [[]]
     const [board , setBoard] = useState(boardInitialState)
     const [completed , setCompleted] = useState(true)
+    const [clicks, setClicks] = useState(0)
 
     const handlePlayAgain = () => {
         setCompleted(false)
@@ -50,8 +47,18 @@ export const Board = (props: BoardProps) => {
         setBoard(tempBoard)
     }
 
-    const validCell = (row:number, col:number) => {
+    const validCell = (row:number, col:number):boolean => {
         return row >= 0 && row <= props.rows &&  col >= 0 && col <= props.cols
+    }
+
+    const addMinesAroundCounter = (row:number, col: number, board:TCell[][]):TCell[][] => {
+        for (let i = row-1; i <= row+1; i++) {
+            for (let j = col - 1; j <= col + 1; j++){
+                try {if (validCell(i,j)) board[i][j].minesAround++;}
+                catch {}
+            }
+        }
+        return board
     }
 
     const placeMines = (board: TCell[][], qtyMines: number): TCell[][] => {
@@ -68,24 +75,52 @@ export const Board = (props: BoardProps) => {
                 board[rowIndex][colIndex].hasMine = true
                 minesCounter++
 
-                for (let i = rowIndex-1; i <= rowIndex+1; i++) {
-                    for (let j = colIndex - 1; j <= colIndex + 1; j++){
-                        if (validCell(i,j)) {
-                            board[i][j].minesAround++
-                        }
-                    }
-                }
+                addMinesAroundCounter(rowIndex, colIndex, board)
 
             }
         }
 
+        return board
+    }
 
+    const hasEmptyAround = (row:number, col:number):boolean => {
+        let counter = 0
+        for (let i = row-1; i <= row+1; i++) {
+            for (let j = col - 1; j <= col + 1; j++){
+                try{if (validCell(i,j) && board[i][j].minesAround === 0 && !board[i][j].hasMine) {
+                    counter++
+                }}
+                catch {}
+            }
+        }
+
+        return counter>0
+    }
+
+    const revealAround = (row:number, col:number, board:TCell[][]):TCell[][] => {
+        for (let i = row-1; i <= row+1; i++) {
+            for (let j = col - 1; j <= col + 1; j++){
+                try{if (validCell(i,j) && hasEmptyAround(i,j) && board[i][j].hidden && !board[i][j].hasMine) {
+                    board[i][j].hidden = false
+                    revealAround(i,j,board)
+                }}
+                catch {}
+            }
+        }
+
+        
         return board
     }
 
     const handleCellClick = (coords: TCoords) => {
-        const tempBoard = board
+        let tempBoard = board
         tempBoard[coords.x][coords.y].hidden = false
+        tempBoard = revealAround(coords.x, coords.y, tempBoard)
+        setBoard(tempBoard) 
+        setClicks(clicks + 1)
+        console.log("validCell:"+  validCell(coords.x, coords.y))
+        console.log("hasEmptyAround:"+  hasEmptyAround(coords.x, coords.y))
+
     }
     
     useEffect(() => {
@@ -106,7 +141,7 @@ export const Board = (props: BoardProps) => {
             return (
             <div className="row">
                 {row.map((cell:TCell, colIndex:number) => {
-                        return <Cell key={`r${rowIndex}c${colIndex}`} cellInfo={cell} coordinates={cell.coords} handleCellClick={handleCellClick}/>
+                        return <Cell key={`r${rowIndex}c${colIndex}${cell.hidden?"h":""}`} cellInfo={cell} coordinates={cell.coords} handleCellClick={handleCellClick}/>
                     })}
             </div>
             )
