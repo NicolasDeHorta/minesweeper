@@ -6,21 +6,30 @@ export type TCell = {
     hasMine: boolean;
     minesAround: number;
     markedMine: boolean;
-    coords: [number,number]
+    coords: TCoords
+}
+
+export type TCoords = {
+    x: number;
+    y: number;
 }
 
 interface CellProps {
-    coordinates: [x:number, y:number];
+    cellInfo: TCell;
+    coordinates: TCoords;
+    handleCellClick: (coords: TCoords) => void
 }
 
 export const Cell = (props: CellProps) => {
-    const [clicked, setClicked ] = useState(false)
+    const [hidden, setHidden ] = useState(true)
 
     const handleClick = () => {
-        setClicked(!clicked)
+        props.handleCellClick(props.coordinates)
+        setHidden(false)
     }
 
-    return (<div className={`mainCell ${clicked ? "clicked" : ""}`} onClick={handleClick} >
+    return (<div className={`mainCell ${!hidden ? "revealed" : ""}`} onClick={handleClick} >
+        {props.cellInfo.hasMine ? "M": (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)}
         
     </div>)
 }
