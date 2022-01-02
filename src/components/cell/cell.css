@@ -1,0 +1,31 @@
+
+:root {
+    --cellSize: 30px;
+}
+
+.cell {
+
+    display:flex;
+    border: 1px solid white;
+    width: var(--cellSize);
+    height: var(--cellSize);
+    color: #242424;
+    background-color: #242424;
+    justify-content: center;
+    align-items: center;
+    font-size: calc(var(--cellSize)*0.6)
+}
+
+.revealed {
+    background-color: #484a88;
+    color: white
+}
+
+.revealed.mineCell {
+    background-color: red
+}
+
+.marked {
+    color:white;
+    background-color:green;
+}

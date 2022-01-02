@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import './cell.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBomb } from '@fortawesome/free-solid-svg-icons'
 
 export type TCell = {
     hidden: boolean;
@@ -17,19 +19,27 @@ export type TCoords = {
 interface CellProps {
     cellInfo: TCell;
     coordinates: TCoords;
-    handleCellClick: (coords: TCoords) => void
+    handleCellClick: (coords: TCoords) => void;
+    handleMarkCell: (coords:TCoords) => void;
 }
 
 export const Cell = (props: CellProps) => {
-    const [hidden, setHidden ] = useState(true)
-
-    const handleClick = () => {
-        props.handleCellClick(props.coordinates)
-        setHidden(false)
+    const handleRightClick = () => {
+        props.handleMarkCell(props.coordinates)
     }
 
-    return (<div className={`mainCell ${!props.cellInfo.hidden ? "revealed" : ""}`} onClick={handleClick} >
-        {props.cellInfo.hasMine ? "M": (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)}
+    const handleClick = () => {
+        if (!props.cellInfo.markedMine) {
+            props.handleCellClick(props.coordinates)
+        }
+    }
+
+    const cellText = props.cellInfo.markedMine ? "🚩"
+                        :props.cellInfo.hasMine ? <FontAwesomeIcon icon={faBomb} />
+                            : (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)
         
+
+    return (<div className={`cell ${props.cellInfo.markedMine ? "marked" : ""} ${!props.cellInfo.hasMine ? "normalCell" : "mineCell"} ${!props.cellInfo.hidden ? "revealed" : ""}`} onClick={handleClick} onContextMenu={handleRightClick} >
+        {cellText}
     </div>)
 } 

@@ -1,19 +1,19 @@
 .row {
     display:flex;
     flex-direction: row;
+    
 }
 
-.mainCell {
-    --cellSize: 40px;
 
-    border: 1px solid white;
-    width: var(--cellSize);
-    height: var(--cellSize);
-    background-color: #242424;
-    color: #242424
+.unclickable {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.3
 }
 
-.revealed {
-    background-color: #484a88;
-    color: white
+.board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
 }

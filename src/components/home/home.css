@@ -1,18 +1,63 @@
 .wrapper {
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     user-select: none;
+    
 }
 
 .inputs {
-    padding-bottom: 1rem
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 2rem
+}
+
+.inputs div {
+    margin: auto;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .inputs input {
     border-radius: 0.5rem;
-    width: 6rem;
-    font-size: 2rem;
+    width: 4rem;
+    font-size: 1.5rem;
     text-align: center;
+}
 
+.bottomBoardText {
+    margin: 2rem 0
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    color: lightgrey;
+    margin-top: auto;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    padding-right: 0.5rem;
+    justify-content: space-between
+}
+
+.footerIcon {
+    margin: 0 0.5rem
+}
+
+.footerIcon:hover,
+.footerIcon:focus {
+    color: rgb(97, 97, 245);
+    cursor: pointer
+}
+
+a{
+    color:white;
+    text-decoration: none;
+}
+
+footer p {
+    font-size: 1rem
 }

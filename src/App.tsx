@@ -5,12 +5,14 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+  
+    <div className="App" onContextMenu={(e)=> e.preventDefault()}>
       <header className="App-header">
         <Home />
       </header>
     </div>
   );
+
 }
 
 export default App;
