@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Board } from '../board/Board';
+import {BrowserView, MobileView} from 'react-device-detect'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
@@ -34,7 +35,15 @@ const [qtyMines, setQtyMines] = useState(20)
                 <div className="singleInput">Rows <input type="number" value={rows} min={1} onChange={handleRowsInput}/></div> 
                 <div>Columns <input type="number" value={cols} min={1} onChange={handleColsInput}/></div> 
                 <div>Mines <input type="number" value={qtyMines} min={1} onChange={handleMinesInput}/></div> 
+                
             </div>
+            <MobileView>            
+                <p className="hintText">* hold to place a flag</p>
+            </MobileView>
+            <BrowserView>            
+                <p className="hintText">*right click to place a flag</p>
+            </BrowserView>
+
         </div>
     <Board key={`r${rows}c${cols}m${qtyMines}`} rows={rows} cols={cols} qtyMines={qtyMines}/>
     </div>
