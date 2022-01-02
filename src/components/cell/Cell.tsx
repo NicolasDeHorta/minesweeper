@@ -21,6 +21,7 @@ interface CellProps {
     coordinates: TCoords;
     handleCellClick: (coords: TCoords) => void;
     handleMarkCell: (coords:TCoords) => void;
+    flagMode: boolean;
 }
 
 export const Cell = (props: CellProps) => {
@@ -29,9 +30,13 @@ export const Cell = (props: CellProps) => {
     }
 
     const handleClick = () => {
+        if (props.flagMode) {
+            props.handleMarkCell(props.coordinates)
+        }
         if (!props.cellInfo.markedMine) {
             props.handleCellClick(props.coordinates)
         }
+
     }
 
     const cellText = props.cellInfo.markedMine ? "🚩"

@@ -33,6 +33,16 @@
     padding-bottom: 2rem
 }
 
+.flagText {
+    color: grey;
+    font-size: 1rem
+}
+
+.flagModeOn {
+    color: white;
+    font-weight: 600;
+}
+
 .bottomBoardText {
     margin: 2rem 0
 }

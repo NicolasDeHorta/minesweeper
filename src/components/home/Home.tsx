@@ -13,6 +13,7 @@ export const Home = () => {
 const [rows, setRows] = useState(10)
 const [cols, setCols] = useState(10)
 const [qtyMines, setQtyMines] = useState(20)
+const [flagMode, setFlagMode] = useState(false)
 
 
     const handleRowsInput = (e:any) => {
@@ -27,6 +28,11 @@ const [qtyMines, setQtyMines] = useState(20)
         setQtyMines(e.target.value)
     }
 
+
+    const handleFlagMode = () => {
+        setFlagMode(!flagMode)
+    }
+
   return (<>
     <div className="wrapper">
         <div>
@@ -38,14 +44,16 @@ const [qtyMines, setQtyMines] = useState(20)
                 
             </div>
             <MobileView>            
-                <p className="hintText">* hold to place a flag</p>
+                <p className={`hintText flagText  ${flagMode ? "flagModeOn" : ""}`} onClick={handleFlagMode}>
+                    {flagMode ? "Placing flags ..." + "🚩" : "Flag mode OFF"}
+                    </p>
             </MobileView>
             <BrowserView>            
                 <p className="hintText">*right click to place a flag</p>
             </BrowserView>
 
         </div>
-    <Board key={`r${rows}c${cols}m${qtyMines}`} rows={rows} cols={cols} qtyMines={qtyMines}/>
+    <Board key={`r${rows}c${cols}m${qtyMines}`} rows={rows} cols={cols} qtyMines={qtyMines} flagMode={flagMode}/>
     </div>
 
     <footer>

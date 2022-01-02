@@ -11,6 +11,7 @@ interface BoardProps {
     rows: number,
     cols: number,
     qtyMines: number,
+    flagMode: boolean,
 }
 
 export const Board = (props: BoardProps) => {
@@ -121,7 +122,8 @@ export const Board = (props: BoardProps) => {
     }
 
     const handleCellClick = (coords: TCoords) => {
-        let tempBoard = board
+        if (!props.flagMode){
+            let tempBoard = board
         const cell = tempBoard[coords.x][coords.y]
         cell.hidden = false
         if (!cell.hasMine) {
@@ -138,6 +140,7 @@ export const Board = (props: BoardProps) => {
         
         setBoard(tempBoard) 
         setClicks(clicks + 1)
+        }
     }
     
     const handleMarkCell = (coords: TCoords) => {
@@ -174,7 +177,7 @@ export const Board = (props: BoardProps) => {
                 return (
                 <div className={`row ${winState || gameOver ? "unclickable" : ""}`}>
                     {row.map((cell:TCell, colIndex:number) => {
-                            return <Cell key={`r${rowIndex}c${colIndex}${cell.hidden?"h":""}`} cellInfo={cell} coordinates={cell.coords} handleCellClick={handleCellClick} handleMarkCell={handleMarkCell}/>
+                            return <Cell key={`r${rowIndex}c${colIndex}${cell.hidden?"h":""}`} cellInfo={cell} coordinates={cell.coords} handleCellClick={handleCellClick} handleMarkCell={handleMarkCell} flagMode={props.flagMode}/>
                         })}
                 </div>
                 )
