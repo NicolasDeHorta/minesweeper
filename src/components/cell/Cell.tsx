@@ -40,8 +40,10 @@ export const Cell = (props: CellProps) => {
     }
 
     const cellText = props.cellInfo.markedMine ? "🚩"
-                        :props.cellInfo.hasMine ? <FontAwesomeIcon icon={faBomb} />
-                            : (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)
+                        : props.cellInfo.hidden ? ""
+                            :props.cellInfo.hasMine ? <FontAwesomeIcon icon={faBomb} />
+                                : (props.cellInfo.minesAround === 0 ? "" : props.cellInfo.minesAround)
+                        
         
 
     return (<div className={`cell ${props.cellInfo.markedMine ? "marked" : ""} ${!props.cellInfo.hasMine ? "normalCell" : "mineCell"} ${!props.cellInfo.hidden ? "revealed" : ""}`} onClick={handleClick} onContextMenu={handleRightClick} >
